@@ -49,7 +49,8 @@ jobs:
         ruby_version: [2.7, 3.1, 3.2, 3.3, 3.4, 4.0]
         browser: [chromium, webkit]
     name: (${{ matrix.browser }}/Ruby${{ matrix.ruby_version }}) Integration test (Node.js)
-    runs-on: ubuntu-latest
+    # ruby/setup-ruby has no Ruby < 3.2 for ubuntu-26.04, which ubuntu-latest now points to
+    runs-on: ${{ matrix.ruby_version < 3.2 && 'ubuntu-24.04' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
@@ -87,7 +88,8 @@ jobs:
         ruby_version: [2.7, 3.1, 3.2, 3.3, 3.4, 4.0]
         browser: [chromium, webkit]
     name: (${{ matrix.browser }}/Ruby${{ matrix.ruby_version }}) Integration test (Bun)
-    runs-on: ubuntu-latest
+    # ruby/setup-ruby has no Ruby < 3.2 for ubuntu-26.04, which ubuntu-latest now points to
+    runs-on: ${{ matrix.ruby_version < 3.2 && 'ubuntu-24.04' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
@@ -126,7 +128,8 @@ jobs:
       matrix:
         ruby_version: [2.4, 2.5, 2.6, 2.7, 3.0, 3.1, 3.2, 3.3, 3.4, 4.0]
     name: (chromium/Ruby${{ matrix.ruby_version }}) example_spec
-    runs-on: ubuntu-latest
+    # ruby/setup-ruby has no Ruby < 3.2 for ubuntu-26.04, which ubuntu-latest now points to
+    runs-on: ${{ matrix.ruby_version < 3.2 && 'ubuntu-24.04' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
